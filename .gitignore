@@ -14,7 +14,7 @@
 *.userprefs
 
 # bin
-./WebClientTeamB/bin
+./ResearcherFrontend/bin
 
 # Mono auto generated files
 mono_crash.*
