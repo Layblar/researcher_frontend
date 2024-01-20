@@ -1,0 +1,168 @@
+﻿@page
+@model ResearcherFrontend.Pages.CreateProjectModel
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<form method="post" class="pb-5">
+    <input id="formDataInput" type="hidden" name="json" />
+    <div id="editor_holder"></div>
+
+    <div class="from-group row">
+        <div class="col-4 ml-auto mb-4" style="margin-right:16px;margin-top:4px;">
+            <input type="submit" value="Create Project" class="btn btn-outline-dark form-control" />
+        </div>
+    </div>
+</form>
+
+<script>
+
+    var schema = {
+        "title": "Create Project",
+        "type": "object",
+        "required": [
+            "projectName",
+            "projectDescription",
+            "projectDataUseDeclaration",
+            "startDate",
+            "endDate",
+            "metaData",
+            "labels"
+        ],
+        "properties": {
+            "projectName": {
+                "type": "string",
+                "description": "Project Name",
+                "minLength": 4,
+                "default": "My Project"
+            },
+            "projectDescription": {
+                "type": "string",
+                "format": "textarea",
+                "description": "Project Description",
+                "minLength": 4,
+                "default": "My Project Description"
+            },
+            "projectDataUseDeclaration": {
+                "type": "string",
+                "description": "Project Data Use Declaration",
+                "minLength": 5,
+                "default": "My Project Data Use Declaration"
+            },
+            "startDate": {
+                "type": "string",
+                "format": "datetime-local",
+                "description": "Project Start Date",
+                "default": "2024-02-01T00:00"
+            },
+            "endDate": {
+                "type": "string",
+                "format": "datetime-local",
+                "description": "Project End Date",
+                "default": "2024-03-01T00:00"
+            },
+            "metaData": {
+                "title": "Metadata",
+                "type": "array",
+                "format": "table",
+                "uniqueItems": true,
+                "items": {
+                    "type": "object",
+                    "title": "Metadata",
+                    "properties": {
+                        "metaDataName": {
+                            "type": "string",
+                            "description": "Additional Information about the User",
+                            "minLength": 1,
+                            "default": "People in the household"
+                        },
+                        "isRequired": {
+                            "type": "boolean",
+                            "format": "checkbox",
+                            "description": "Is Required",
+                            "default": true
+                        }
+                    }
+                }
+            },
+            "labels": {
+                "title": "Labels",
+                "type": "array",
+                "format": "table",
+                "uniqueItems": true,
+                "items": {
+                    "type": "object",
+                    "title": "Labels",
+                    "properties": {
+                        "labelName": {
+                            "type": "string",
+                            "description": "Label Name",
+                            "minLength": 1,
+                            "default": "Label Name"
+                        },
+                        "labelDescription": {
+                            "type": "string",
+                            "description": "Label Description",
+                            "minLength": 1,
+                            "default": "Label Description"
+                        },
+                        "labelMethod": {
+                            "type": "string",
+                            "description": "Label Method",
+                            "enum": [
+                                "Timer",
+                                "Chart"
+                            ]
+                        },
+                        "categories": {
+                            "title": "Categories",
+                            "type": "array",
+                            "format": "table",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "object",
+                                "title": "Categories",
+                                "properties": {
+                                    "deviceCategoryName": {
+                                        "type": "string",
+                                        "description": "Device Category Name",
+                                        "minLength": 1,
+                                        "default": "Device Category Name"
+                                    },
+                                    "deviceCategoryDescription": {
+                                        "type": "string",
+                                        "description": "Device Category Description",
+                                        "minLength": 1,
+                                        "default": "Device Category Description"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    const element = document.getElementById('editor_holder');
+    var options = Object.assign({}, JSONEditor.defaults.options, {
+        iconlib: 'bootstrap',
+        object_layout: 'normal',
+        schema: schema,
+        show_errors: 'interaction',
+        theme: 'bootstrap4',
+        required_by_default: true,
+        disable_collapse: true,
+        disable_edit_json: true,
+        disable_properties: true,
+        no_additional_properties: true
+
+    })
+
+    const editor = new JSONEditor(element, options);
+
+    editor.on('change', function () {
+        document.querySelector('#formDataInput').value = JSON.stringify(editor.getValue())
+    })
+
+ </script>

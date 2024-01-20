@@ -1,0 +1,65 @@
+﻿@page
+@model ResearcherFrontend.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="border container p-5 col-8" style="background-color:#f0f0f0; border-radius: 10px;">
+    <h2 class="text-inf" style="margin-bottom:35px; text-align:center; margin-top:-20px">Register<img src="~/logo.png" class="rounded" style="margin-left: 10px" height="45px" /></h2>
+    
+    <form method="post">
+        @* <img src="~/logo.png" class="rounded float-left" height="200px" /> *@
+
+
+        <div class="from-group row">
+            <div class="col-2" style="margin:10px; margin-left:10px;">
+                <label for="email">Email:</label>
+            </div>
+            <div class="col-9" style="margin-left:auto">
+                <input type="text" asp-for="Email" class="form-control" placeholder="Email" required />
+            </div>
+        </div>
+
+        <div class="from-group row">
+            <div class="col-2" style="margin:10px;margin-left:10px;">
+                <label for="password">Password:</label>
+            </div>
+            <div class="col-9" style="margin-left:auto">
+                <input asp-for="Password" class="form-control" type="password" placeholder="Password" required />
+            </div>
+        </div>
+
+        <div class="from-group row">
+            <div class="col-2" style="margin:10px;margin-left:10px;">
+                <label for="firstName">First Name:</label>
+            </div>
+            <div class="col-9" style="margin-left:auto">
+                <input asp-for="FirstName" class="form-control" type="text" placeholder="First Name" required />
+            </div>
+        </div>
+
+        <div class="from-group row">
+            <div class="col-2" style="margin:10px;margin-left:10px;">
+                <label for="lastName">Last Name:</label>
+            </div>
+            <div class="col-9" style="margin-left:auto">
+                <input asp-for="LastName" class="form-control" type="text" placeholder="Last Name" required />
+            </div>
+        </div>
+
+        <div class="from-group row">
+            <div class="col-2" style="margin:10px;margin-left:10px;">
+                <label for="organization">Organization:</label>
+            </div>
+            <div class="col-9" style="margin-left:auto">
+                <input asp-for="Organization" class="form-control" type="text" placeholder="Organization" required />
+            </div>
+        </div>
+
+        <div class="from-group row">
+            <div class="col-4 ml-auto" style="margin-right:16px;margin-top:4px;">
+                <input type="submit" value="Register" class="btn btn-outline-dark form-control" />
+            </div>
+        </div>
+    </form>
+</div>

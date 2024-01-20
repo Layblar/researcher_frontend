@@ -1,0 +1,52 @@
+﻿@page
+@model ResearcherFrontend.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="border container p-5 col-8" style="background-color:#f0f0f0; border-radius: 10px;">
+    <h2 class="text-inf" style="margin-bottom:35px; text-align:center; margin-top:-20px">Login</h2>
+    <form method="post">
+        <img src="~/logo.png" class="rounded float-left" height="92px" />
+
+        <div class="from-group row">
+            <div class="col-1" style="margin:10px; margin-left:10px;">
+                <label for="email">Email:</label>
+            </div>
+            <div class="col-9" style="margin-left:auto">
+                <input type="text" asp-for="Email" class="form-control" placeholder="Email" required />
+            </div>
+        </div>
+
+        <div class="from-group row">
+            <div class="col-1" style="margin:10px;margin-left:10px;">
+                <label for="password">Password:</label>
+            </div>
+            <div class="col-9" style="margin-left:auto">
+                <input asp-for="Password" class="form-control" type="password" placeholder="Password" required />
+            </div>
+        </div>
+
+       <div class="from-group row">
+            <div class="col-5 ml-auto" style="margin-right:16px;margin-top:4px; display: flex; justify-content: space-between;">
+                <a type="button" value="Register" asp-area="" asp-page="/Register" class="btn me-2 btn-outline-dark form-control">Register</a>
+                <input type="submit" value="Login" class="btn btn-outline-dark form-control" />
+            </div>
+        </div>
+
+        
+    </form>
+</div>
+
+
+
+<script>
+    @if ((!ViewData.ModelState.IsValid) && (ViewData.ModelState["Error"].Errors.Count > 0))
+    {
+        <text>
+        $(document).ready(function(){
+            alert("Username or password wrong!");
+        })
+        </text>
+    }
+</script>
