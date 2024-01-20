@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Changelog</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- GitHub Markdown CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.css">
+    <!-- Showdown JS -->
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Custom styles for this template -->
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: black;
+        }
+
+        .container {
+            color: black;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto markdown-body">
+        <h3><a href="https://layblar.github.io/docs/index.html"><i class="bi bi-arrow-left"></i> Back to main page</a></h3>
+        <div id="changelogContent"></div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+            var currentFileName = window.location.pathname.split('/').pop().split('.')[0];
+
+            var changelogFile = currentFileName + '.md';
+                fetch(changelogFile)
+                    .then(response => response.text())
+                    .then(data => {
+                        var converter = new showdown.Converter();
+                        converter.setOption('customizedHeaderId', true);
+                        converter.setOption('tables', true);
+                        var html = converter.makeHtml(data);
+        
+                        $('#changelogContent').html(html);
+
+                        // Extract title from HTML content
+                        var titleMatch = /<h1.*?>(.*?)<\/h1>/i.exec(html);
+                        var pageTitle = titleMatch ? titleMatch[1] : "Changelog";
+
+                        // Set the dynamically fetched title
+                        document.title = pageTitle;
+                    })
+                    .catch(error => {
+                        $('#changelogContent').html("<p class='text-danger'>Changelog not found.</p>");
+                    });
+            });
+        </script>     
+        
+    </div>
+</body>
+</html>
