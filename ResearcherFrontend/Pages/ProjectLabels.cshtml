@@ -1,0 +1,116 @@
+﻿@page
+@model ResearcherFrontend.Pages.ProjectLabelsModel
+@{
+    ViewData["Title"] = "Project Labels";
+}
+
+
+
+<div>
+    <h2 class="pb-2 pt-3">Labeled Data for Project: @Model.ProjectName</h2>
+
+    <table id="myLabelsTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Label Data ID</th>
+                <th>Label Name</th>
+                <th>Category Name</th>
+                <th>Reading Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+             @{
+            for (int i = 0; i < Model.AllLabels.Count; i++)
+            {
+                <tr>
+                <td>@Model.AllLabels[i].GetValue("labeledDataId")</td>
+                <td>@Model.AllLabels[i].GetValue("labelName")</td>
+                <td>@Model.AllLabels[i].GetValue("deviceCategoryName")</td>
+                <td>@Model.AllLabels[i].GetValue("readingTime")</td>
+                <td><a class="ps-4" href="#" data-toggle="modal" data-target="#chartModal" title="See chart for this LabelData ID"  onclick='loadData("@Model.AllLabels[i].GetValue("labeledDataId")")'><i class="bi bi-bar-chart-line-fill h5"></i></a></td>
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+
+    
+    <div class="modal fade" id="chartModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chart Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div><canvas id="dataFromChart"></canvas></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    new DataTable('#myLabelsTable', {
+    });
+
+
+    var json = @Html.Raw(Json.Serialize(Model.AllLabels.Select(label => label.ToString())));
+    
+    var jsonArray = json.map(JSON.parse);
+
+    function loadData(labelId) {
+
+        var versionLabels = Object.keys(jsonArray[0])
+            .filter((key) => key.startsWith("v") && key !== "validFrom" && key !== "validTo");
+
+        var datasets = versionLabels.map((version) => {
+            return {
+                label: version,
+                data: jsonArray.map((entry) => ({
+                    x: new Date(entry.readingTime).getTime(),
+                    y: entry[version],
+                })),
+                fill: false,
+                hidden: version !== "v1_7_0", 
+            };
+        });
+
+        new Chart(document.getElementById('dataFromChart'), {
+            type: 'line',
+            data: {
+                datasets: datasets,
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: false,
+                spanGaps: true,
+                scales: {
+                    x: {
+                        type: 'time',
+                    },
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "All Datapoints with the Label ID: " + labelId
+                    }
+                }
+            },
+
+        });
+
+    }
+
+    
+</script>

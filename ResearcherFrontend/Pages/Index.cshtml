@@ -7,7 +7,7 @@
 <div>
     <h2 class="pb-2 pt-3">List of your projects</h2>
 
-    <table id="myProjectsTable" class="display compact" style="width:100%">
+    <table id="myProjectsTable" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Project ID</th>
@@ -27,7 +27,7 @@
                         <td>@Model.AllProjects[i].GetValue("startDate")</td>
                         <td>@Model.AllProjects[i].GetValue("endDate")</td>
                         <td>@Model.AllProjects[i].GetValue("created")</td>
-                        <td><a class="ps-3" href="#"><i class="bi bi-bookmarks-fill h5"></i></a> <a class="ps-2" href="/editProject?projectId=@Model.AllProjects[i].GetValue("projectId")"><i class="bi h5 bi-pencil-square"></i></a></td>
+                        <td><a class="ps-3" href="/projectLabels?projectId=@Model.AllProjects[i].GetValue("projectId")"><i class="bi bi-bookmarks-fill h5"></i></a> <a class="ps-2" href="/editProject?projectId=@Model.AllProjects[i].GetValue("projectId")"><i class="bi h5 bi-pencil-square"></i></a></td>
                 </tr>
             }
             }

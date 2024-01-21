@@ -35,7 +35,6 @@ namespace ResearcherFrontend.Pages
                 try
                 {
                     var json = JObject.Parse(response.Content);
-                    ProjectId = json.GetValue("projectId").ToString();
                     Project = JObject.Parse(response.Content).ToString();
 
                 }
