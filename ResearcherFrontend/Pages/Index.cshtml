@@ -40,6 +40,24 @@
 
 <script>
 
-    new DataTable('#myProjectsTable', {
-    });
+    // var json = @Html.Raw(Json.Serialize(Model.AllProjects.Select(label => label.ToString())));
+
+    // var jsonArray = json.map(JSON.parse);
+    // console.log(jsonArray);
+
+    // var formattedDataArray = jsonArray.map(function (data) {
+    //     return {
+    //         ...data,
+    //         startDate: new Date(data.startDate).toLocaleString(),
+    //         endDate: new Date(data.endDate).toLocaleString(),
+    //         created: new Date(data.created).toLocaleString(),
+    //     };
+    // });
+
+    // console.log(formattedDataArray);
+    // var idOfSelectedRow;
+
+    var table = new DataTable('#myProjectsTable', {})
+            
+
 </script>

@@ -10,7 +10,8 @@
     <div id="editor_holder"></div>
 
     <div class="from-group row">
-        <div class="col-4 ml-auto mb-4" style="margin-right:16px;margin-top:4px;">
+        <div class="col-5 ml-auto" style="margin-right:16px;margin-top:4px; display: flex; justify-content: space-between;">
+            <a type="button" value="Index" asp-area="" asp-page="/Index" class="btn me-2 btn-outline-dark form-control">Back</a>
             <input type="submit" value="Edit Project" class="btn btn-outline-dark form-control" />
         </div>
     </div>
@@ -71,6 +72,10 @@
                     "type": "object",
                     "title": "Metadata",
                     "properties": {
+                        "metaDataId": {
+                            "type": "string",
+                            "readonly": true
+                        },
                         "metaDataName": {
                             "type": "string",
                             "description": "Additional Information about the User",
@@ -82,6 +87,10 @@
                             "format": "checkbox",
                             "description": "Is Required",
                             "default": true
+                        },
+                        "value": {
+                            "type": "string",
+                            "readonly": true
                         }
                     }
                 }
@@ -95,6 +104,10 @@
                     "type": "object",
                     "title": "Labels",
                     "properties": {
+                        "labelId": {
+                            "type": "string",
+                            "readonly": true
+                        },
                         "labelName": {
                             "type": "string",
                             "description": "Label Name",
@@ -124,6 +137,10 @@
                                 "type": "object",
                                 "title": "Categories",
                                 "properties": {
+                                    "deviceCategoryId": {
+                                        "type": "string",
+                                        "readonly": true
+                                    },
                                     "deviceCategoryName": {
                                         "type": "string",
                                         "description": "Device Category Name",

@@ -6,6 +6,12 @@ All notable changes to this project will be documented in this file.
 
 - [Marcel Nague](https://github.com/marcel-nague)
 
+## 2024-01-21
+
+### Added/Updated
+- Updated Project and Edit view
+- Added Label View + aggregated charts for labels
+
 ## 2024-01-20
 
 ### Added/Updated
