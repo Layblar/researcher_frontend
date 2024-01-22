@@ -10,30 +10,8 @@
     <h2 class="pb-2 pt-3">Labeled Data for Project: @Model.ProjectName</h2>
 
     <table id="myLabelsTable" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Label Data ID</th>
-                <th>Label Name</th>
-                <th>Category Name</th>
-                <th>Reading Time</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-             @{
-            for (int i = 0; i < Model.AllLabels.Count; i++)
-            {
-                <tr>
-                <td>@Model.AllLabels[i].GetValue("labeledDataId")</td>
-                <td>@Model.AllLabels[i].GetValue("labelName")</td>
-                <td>@Model.AllLabels[i].GetValue("deviceCategoryName")</td>
-                <td>@Model.AllLabels[i].GetValue("readingTime")</td>
-                <td><a class="ps-4" href="#" data-toggle="modal" data-target="#chartModal" title="See chart for this LabelData ID"  onclick='loadData("@Model.AllLabels[i].GetValue("labeledDataId")")'><i class="bi bi-bar-chart-line-fill h5"></i></a></td>
-                </tr>
-            }
-            }
-        </tbody>
     </table>
+    <div style="height:60px"></div> @* margin fix from datatables *@
 
     
     <div class="modal fade" id="chartModal">
@@ -60,13 +38,49 @@
 
 <script>
 
-    new DataTable('#myLabelsTable', {
-    });
-
-
     var json = @Html.Raw(Json.Serialize(Model.AllLabels.Select(label => label.ToString())));
     
     var jsonArray = json.map(JSON.parse);
+
+    var formattedDataArray = jsonArray.map(function (data) {
+        const formatDateString = (dateString) => {
+            const date = new Date(dateString);
+            const day = ('0' + date.getUTCDate()).slice(-2);
+            const month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+            const year = date.getUTCFullYear();
+            const hours = ('0' + date.getUTCHours()).slice(-2);
+            const minutes = ('0' + date.getUTCMinutes()).slice(-2);
+            const seconds = ('0' + date.getUTCSeconds()).slice(-2);
+            return `${day}.${month}.${year}, ${hours}:${minutes}:${seconds}`;
+        };
+
+        return {
+            ...data,
+            readingTime: formatDateString(data.readingTime)
+        };
+    });
+
+    new DataTable('#myLabelsTable', {
+
+        data: formattedDataArray,
+        columns: [
+            { data: 'labeledDataId', title: 'Label Data ID' },
+            { data: 'labelName', title: 'Label Name' },
+            { data: 'deviceCategoryName', title: 'Category Name' },
+            { data: 'readingTime', title: 'Reading Time' },
+            {
+                data: null,
+                title: 'Action',
+                render: function (data, type, row) {
+                    return '<a class="ps-4" href="#" data-toggle="modal" data-target="#chartModal" title="See chart for this LabelData ID"  onclick="loadData(\'' + row.labeledDataId + '\')"><i class="bi bi-bar-chart-line-fill h5"></i></a>';
+                }
+            }
+        ],
+        columnDefs: [{
+            targets: [4],
+            orderable: false
+        }],
+    });
 
     function loadData(labelId) {
 
