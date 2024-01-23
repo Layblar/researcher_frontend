@@ -27,7 +27,7 @@ The Research Project Management System is a web-based application designed to he
 2. Run the following command to clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/research-project-management.git
+   git clone https://github.com/Layblar/researcher_frontend.git
    ```
 
 ### Build and Run
