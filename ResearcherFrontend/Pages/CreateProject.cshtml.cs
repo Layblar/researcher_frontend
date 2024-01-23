@@ -28,7 +28,6 @@ namespace ResearcherFrontend.Pages
             {
                 Authenticator = authenticator
             };
-            //TODO: add researcherId to request
             var client = new RestClient(options);
             var request = new RestRequest("project/project");
             request.AddHeader("Content-type", "application/json");

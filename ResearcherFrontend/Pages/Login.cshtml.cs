@@ -49,7 +49,6 @@ namespace ResearcherFrontend.Pages
                 }
                 if (json != null)
                 {
-                    //TODO: store researcherId
                     Token = (string)json.GetValue("token");
                     ResearcherId = json["account"]["researcherId"].ToString();
                     LoggedIn = true;
@@ -72,6 +71,7 @@ namespace ResearcherFrontend.Pages
         {
             LoggedIn = false;
             Token = null;
+            ResearcherId = "";
         }
     }
 }
