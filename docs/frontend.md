@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 
 - [Marcel Nague](https://github.com/marcel-nague)
 
+## 2024-01-23
+
+### Added/Updated
+- ChartJs render fix
+
 ## 2024-01-22
 
 ### Added/Updated

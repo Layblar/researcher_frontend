@@ -34,7 +34,7 @@ namespace ResearcherFrontend.Pages
 
             // sampleLabeledDataId
             // labeledDataId -> queryparam
-            var request = new RestRequest("project/project/" + projectId + "/data?pageIndex=0");
+            var request = new RestRequest("project/project/" + projectId + "/data?pageIndex=0&pageSize=50000");
             //var request = new RestRequest("project/project/" + projectId + "/data?pageIndex=0&pageSize=5000&labeledDataId=sampleLabeledDataId"); --> für chart
             request.AddHeader("Content-type", "application/json");
             var response = client.ExecuteGet(request);

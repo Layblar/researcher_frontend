@@ -72,7 +72,7 @@
                 data: null,
                 title: 'Action',
                 render: function (data, type, row) {
-                    return '<a class="ps-4" href="#" data-toggle="modal" data-target="#chartModal" title="See chart for this LabelData ID"  onclick="loadData(\'' + row.labeledDataId + '\')"><i class="bi bi-bar-chart-line-fill h5"></i></a>';
+                    return '<a class="ps-4" href="#" data-toggle="modal" data-target="#chartModal" title="See chart for this LabelData ID"  onclick="loadData(\'' + row.labeledDataId + '\', \'' + row.deviceCategoryName + '\')"><i class="bi bi-bar-chart-line-fill h5"></i></a>';
                 }
             }
         ],
@@ -82,7 +82,13 @@
         }],
     });
 
-    function loadData(labelId) {
+    function loadData(labelId, categoryName) {
+
+        var existingChart = Chart.getChart('dataFromChart');
+
+        if (existingChart) {
+            existingChart.destroy();
+        }
 
         var versionLabels = Object.keys(jsonArray[0])
             .filter((key) => key.startsWith("v") && key !== "validFrom" && key !== "validTo");
@@ -90,7 +96,7 @@
         var datasets = versionLabels.map((version) => {
             return {
                 label: version,
-                data: jsonArray.map((entry) => ({
+                data: jsonArray.filter(entry => entry.labeledDataId === labelId).map((entry) => ({
                     x: new Date(entry.readingTime).getTime(),
                     y: entry[version],
                 })),
@@ -99,7 +105,7 @@
             };
         });
 
-        new Chart(document.getElementById('dataFromChart'), {
+        var chart = new Chart(document.getElementById('dataFromChart'), {
             type: 'line',
             data: {
                 datasets: datasets,
@@ -117,7 +123,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: "All Datapoints with the Label ID: " + labelId
+                        text: "All Datapoints for the label: " + categoryName + " (ID: " + labelId + ")"
                     }
                 }
             },
